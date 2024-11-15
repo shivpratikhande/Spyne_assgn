@@ -5,10 +5,11 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Upload, X } from 'lucide-react'
-
+import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '../../components/ui/textarea'
+// Correct for named export
 import {
   Form,
   FormControl,
@@ -19,6 +20,7 @@ import {
   FormMessage,
 } from '../../components/ui/form'
 import { Toast } from '../../components/ui/toast'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -34,6 +36,7 @@ const formSchema = z.object({
 
 export default function ProductCreationForm() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [responseValue, setResponseValue] = useState<any>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,13 +46,38 @@ export default function ProductCreationForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically send the form data to your backend
-    console.log(values)
-    Toast({
-      title: 'Product created!',
-      description: 'Your product has been successfully created.',
-    })
+  const router = useRouter()
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Prepare form data
+    const formData = new FormData()
+    formData.append('title', values.title)
+    formData.append('description', values.description)
+    formData.append('images', values.image)
+    formData.append('tags', "tags") // Add tags as needed
+
+    try {
+      // Send the form data to the backend
+      const response = await axios.post('http://localhost:3000/api/cars', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Important for file uploads
+        },
+      })
+
+      // If the request is successful
+      console.log(response.data)
+      setResponseValue(response.data)
+
+      // Display success toast
+      
+
+      // Redirect to /home after successful form submission
+      router.push('/home')
+    } catch (error) {
+      console.error('Error creating product:', error)
+      // Optionally handle errors and show an error message
+      
+    }home
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,6 +152,7 @@ export default function ProductCreationForm() {
                       onChange={handleImageChange}
                       className="hidden"
                       id="image-upload"
+                      multiple
                       {...field}
                     />
                     <label

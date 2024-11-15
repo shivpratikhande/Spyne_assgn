@@ -1,14 +1,18 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Search, Menu } from "lucide-react"
 import Image from "next/image"
+import { useRouter } from 'next/navigation'
 
 export default function LandingPage() {
+    const router = useRouter()
+
     return (
         <div className="flex flex-col min-h-screen text-center justify-center">
-            
-            <main className="flex-1 bg-black">
+
+            <main className="flex-1 ">
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
                         Find Your Perfect Ride
@@ -17,7 +21,7 @@ export default function LandingPage() {
                                     Browse thousands of cars from trusted dealers and private sellers. Your dream car is just a click away.
                                 </p>6 */}
                 </div>
-                <section className="relative py-12 md:py-24 lg:py-32 xl:py-48 bg-black m-5 rounded-xl">
+                <section className="relative py-12  md:py-24 lg:py-32 xl:py-48 bg-black m-5 rounded-xl border-transparent border-black shadow-xl shadow-black">
                     <div className="absolute inset-0 z-0">
                         <video
                             className="w-full h-full object-cover rounded-xl"
@@ -30,7 +34,7 @@ export default function LandingPage() {
                             Your browser does not support the video tag.
                         </video>
                     </div>
-                    <div className="relative z-10 container px-4 md:px-6 text-center text-white">
+                    <div className="relative z-10  px-4 md:px-6 text-center text-white ">
                         <div className="flex flex-col items-center space-y-4 text-center">
                             <div className="space-y-2">
                                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
@@ -80,7 +84,7 @@ export default function LandingPage() {
                     </div>
                 </section>
                 <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white">
-                    <div className="container px-4 md:px-6">
+                    <div className=" px-4 md:px-6">
                         <div className="flex flex-col items-center space-y-4 text-center">
                             <div className="space-y-2">
                                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Sell Your Car?</h2>
@@ -88,7 +92,7 @@ export default function LandingPage() {
                                     List your car on AutoMarket and reach thousands of potential buyers today.
                                 </p>
                             </div>
-                            <Button className="bg-white text-black hover:bg-gray-200" size="lg">
+                            <Button className="bg-white text-black hover:bg-gray-200" size="lg" onClick={() => { router.push("/pages/create") }}>
                                 Start Selling
                             </Button>
                         </div>
@@ -96,7 +100,7 @@ export default function LandingPage() {
                 </section>
             </main>
             <footer className="w-full py-6 bg-gray-800 text-white">
-                <div className="container px-4 md:px-6">
+                <div className=" px-4 md:px-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center space-x-4">
                             <Image src="/placeholder.svg" alt="AutoMarket Logo" width={32} height={32} />

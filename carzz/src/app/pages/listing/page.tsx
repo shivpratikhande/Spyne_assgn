@@ -1,10 +1,10 @@
-import ProductCreationForm from '@/app/components/Product-Creation'
+import CarListPage from '@/app/components/CarListing'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      <ProductCreationForm />
+        <CarListPage/>
     </div>
   )
 }
