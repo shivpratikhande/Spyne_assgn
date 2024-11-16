@@ -24,7 +24,6 @@ interface Car {
 }
 import { useRouter } from 'next/navigation';
 
-
 export default function CarListPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [cars, setCars] = useState<Car[]>([]);
@@ -35,6 +34,10 @@ export default function CarListPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentCar, setCurrentCar] = useState<Car | null>(null);
     const [updatedCar, setUpdatedCar] = useState<Car | null>(null);
+
+    // State to manage delete confirmation modal
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [carToDelete, setCarToDelete] = useState<Car | null>(null);
 
     // Filtering cars based on the search term
     const filteredCars = cars.filter((car) =>
@@ -61,76 +64,78 @@ export default function CarListPage() {
         fetchCars();
     }, []);
 
-    // Open the modal for editing a car and populate the updatedCar state
     const openModal = (car: Car) => {
-        console.log("Opening modal for car:", car); // Debugging log
-        setCurrentCar(car); // Set the selected car
-        setUpdatedCar({ ...car }); // Set initial values for the modal (including id)
-        setIsModalOpen(true); // Open the modal
+        setCurrentCar(car);
+        setUpdatedCar({ ...car });
+        setIsModalOpen(true);
     };
 
-    // Close the modal
     const closeModal = () => {
         setIsModalOpen(false);
     };
 
-    // Handle input changes for title, description, and images in the modal
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
         field: keyof Car
     ) => {
         if (updatedCar) {
-            console.log("Updating field:", field, "with value:", e.target.value); // Debugging log
             setUpdatedCar({
                 ...updatedCar,
                 [field]:
                     field === 'images'
                         ? e.target.value.split(',').map((url) => url.trim()) // Handle images field
-                        : e.target.value, // Update other fields
+                        : e.target.value,
             });
         }
     };
 
-    // Handle car update after the user edits it
     const handleUpdateCar = async () => {
         if (!updatedCar || !updatedCar._id) {
-            console.error("Car ID is missing:", updatedCar); // Debugging log
             setError('Car ID is missing. Please try again.');
             return;
         }
 
-        console.log("Updating car with ID:", updatedCar._id); // Debugging log
         try {
             const response = await axios.put(
                 `http://192.168.1.12:3000/api/cars/${updatedCar._id}`,
                 updatedCar
             );
-            console.log("Car updated:", response.data); // Debugging log
-            // Update the cars list with the updated car data
             setCars(cars.map((car) => (car._id === updatedCar._id ? response.data : car)));
-            closeModal(); // Close the modal after update
+            closeModal();
         } catch (error) {
-            console.error('Error updating car:', error);
             setError('Failed to update car. Please try again later.');
         }
     };
 
-    // Handle car deletion
-    const handleDelete = async (id: number) => {
+    // Handle delete confirmation
+    const openDeleteModal = (car: Car) => {
+        setCarToDelete(car);
+        setIsDeleteModalOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false);
+        setCarToDelete(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!carToDelete) return;
+
         try {
-            await axios.delete(`http://192.168.1.12:3000/api/cars/${id}`);
-            setCars(cars.filter((car) => car._id !== id));
+            await axios.delete(`http://192.168.1.12:3000/api/cars/${carToDelete._id}`);
+            setCars(cars.filter((car) => car._id !== carToDelete._id));
+            setIsDeleteModalOpen(false);
+            alert('Car deleted successfully');
         } catch (error) {
-            console.error('Error deleting car:', error);
             setError('Failed to delete car. Please try again later.');
         }
     };
 
-    //view
+    // Handle view
     const router = useRouter();
-    const handleView = async(userId: number)=>{
-        router.push(`/pages/mycars/cardetails/${userId}`)
-    }
+    const handleView = (userId: number) => {
+        router.push(`/pages/mycars/cardetails/${userId}`);
+    };
 
     return (
         <div className="container mx-auto p-4 space-y-6 mt-12">
@@ -139,7 +144,6 @@ export default function CarListPage() {
                 <ToggleButton />
             </div>
 
-            {/* Search bar with icon */}
             <div className="relative w-full">
                 <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
                 <Input
@@ -151,28 +155,23 @@ export default function CarListPage() {
                 />
             </div>
 
-            {/* Loading state */}
             {loading && <p className="text-center text-gray-500">Loading cars...</p>}
 
-            {/* Error handling */}
             {error && <p className="text-center text-red-500">{error}</p>}
 
-            {/* Render filtered and reversed cars */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {reversedCars.length === 0 && !loading && !error && (
                     <p className="text-center text-gray-500">No cars found. Try a different search term.</p>
                 )}
 
                 {reversedCars.map((car) => (
-                    <div className="relative" key={car._id}> {/* Use car.id as the key */}
-                        {/* Card Content */}
+                    <div className="relative" key={car._id}>
                         <Card className="h-full flex flex-col pt-5">
                             <CardContent className="flex flex-col justify-between flex-grow">
-                                {/* Render images if available */}
                                 {car.images.length > 0 ? (
                                     <div className="relative overflow-hidden" style={{ height: '250px' }}>
                                         <img
-                                            src={`http://localhost:3000/${car.images[0]}`}
+                                            src={car.images[0]}
                                             alt={`Car Image`}
                                             className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 rounded-lg"
                                         />
@@ -186,7 +185,7 @@ export default function CarListPage() {
                                 <CardDescription>{car.description}</CardDescription>
                             </CardHeader>
                             <CardFooter>
-                                <Button className="w-full hover:bg-transparent hover:bg-teal-900" onClick={()=>handleView(car._id)}>
+                                <Button className="w-full hover:bg-transparent hover:bg-teal-900" onClick={() => handleView(car._id)}>
                                     View Details
                                 </Button>
                             </CardFooter>
@@ -203,7 +202,7 @@ export default function CarListPage() {
 
                         {/* Delete button */}
                         <Button
-                            onClick={() => handleDelete(car.id)}
+                            onClick={() => openDeleteModal(car)}
                             variant="outline"
                             className="absolute top-2 right-2 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-100"
                         >
@@ -268,6 +267,31 @@ export default function CarListPage() {
                                 </Button>
                                 <Button onClick={handleUpdateCar}>Save Changes</Button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {isDeleteModalOpen && carToDelete && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg w-full max-w-md">
+                        <h2 className="text-xl font-bold mb-4 text-center">Are you sure you want to delete this car?</h2>
+
+                        {/* Display car details */}
+                        <div className="space-y-4">
+                            <p><strong>Title:</strong> {carToDelete.title}</p>
+                            <p><strong>Description:</strong> {carToDelete.description}</p>
+                            {carToDelete.images.length > 0 && (
+                                <div className="mt-2">
+                                    <img src={carToDelete.images[0]} alt="Car Image" className="w-full h-48 object-cover rounded-lg" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-between mt-4">
+                            <Button onClick={closeDeleteModal} variant="outline">Cancel</Button>
+                            <Button onClick={handleConfirmDelete} className="bg-red-600 hover:bg-red-700">Delete</Button>
                         </div>
                     </div>
                 </div>
