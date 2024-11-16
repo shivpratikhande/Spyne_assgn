@@ -4,8 +4,8 @@ import React from 'react'
 function page() {
   return (
     <div>
-{/*       <ProductCreationForm />
- */}    </div>
+      <ProductCreationForm />
+    </div>
   )
 }
 

@@ -12,3 +12,16 @@ module.exports = {
     ignoreDuringBuilds: process.env.NODE_ENV === 'production'
   }
 };
+
+// next.config.js
+
+module.exports = {
+  images: {
+    domains: ['res.cloudinary.com'], // Add Cloudinary domain here
+  },
+}
+module.exports = {
+  images: {
+    domains: ['imgd.aeplcdn.com'], // Add Cloudinary domain here
+  },
+}

@@ -21,6 +21,7 @@ interface Car {
     description: string;
     images: string[];
 }
+
 import { useRouter } from "next/navigation";
 
 export default function CarListPage() {
@@ -63,12 +64,13 @@ export default function CarListPage() {
     // Open the edit modal
     const openEditModal = (car: Car) => {
         setCurrentCar(car);
-        setUpdatedCar({ ...car });
+        setUpdatedCar({ ...car }); // Initialize updatedCar with current car data
         setIsEditModalOpen(true);
     };
 
     const closeEditModal = () => {
         setIsEditModalOpen(false);
+        setUpdatedCar(null); // Reset updatedCar when closing the modal
     };
 
     const handleInputChange = (
@@ -162,7 +164,7 @@ export default function CarListPage() {
                                     <img
                                         src={car.images[0]}
                                         alt="Car"
-                                        className="w-full h-48 object-cover rounded-lg"
+                                        className="w-full h-56 object-cover rounded-lg"
                                     />
                                 ) : (
                                     <p>No images available</p>
@@ -180,7 +182,7 @@ export default function CarListPage() {
                         <Button
                             onClick={() => openEditModal(car)}
                             variant="outline"
-                            className="absolute top-2 right-12"
+                            className="absolute top-2 right-16"
                         >
                             <PenTool size={16} />
                         </Button>
@@ -194,6 +196,50 @@ export default function CarListPage() {
                     </div>
                 ))}
             </div>
+
+            {/* Edit Modal */}
+            {isEditModalOpen && updatedCar && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg w-full max-w-md">
+                        <h2 className="text-xl font-bold mb-4">Edit Car</h2>
+                        <div>uploads/7872733c3b325dc692e26de6cdae30b4
+                            <label className="block text-sm font-medium text-gray-700">Title</label>
+                            <Input
+                                type="text"
+                                value={updatedCar.title}
+                                onChange={(e) => handleInputChange(e, "title")}
+                                className="mt-1"
+                            />
+                        </div>
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-gray-700">Description</label>
+                            <Input
+                                type="text"
+                                value={updatedCar.description}
+                                onChange={(e) => handleInputChange(e, "description")}
+                                className="mt-1"
+                            />
+                        </div>
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-gray-700">Images (comma separated)</label>
+                            <Input
+                                type="text"
+                                value={updatedCar.images.join(", ")}
+                                onChange={(e) => handleInputChange(e, "images")}
+                                className="mt-1"
+                            />
+                        </div>
+                        <div className="flex justify-between mt-4">
+                            <Button onClick={closeEditModal} variant="outline">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleUpdateCar} className="bg-blue-500 text-white">
+                                Save Changes
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Delete Confirmation Modal */}
             {isDeleteModalOpen && carToDelete && (

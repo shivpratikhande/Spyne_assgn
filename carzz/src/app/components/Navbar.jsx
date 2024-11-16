@@ -31,12 +31,12 @@ export default function Navbar() {
         const handleStorageChange = () => {
             const token = localStorage.getItem("token");
 
-            if (!token) {
+            /* if (!token) {
                 setIsAuthenticated(false);
                 router.push("/pages/login"); // Redirect if token is removed
             } else {
                 setIsAuthenticated(true);
-            }
+            } */
         };
 
         window.addEventListener("storage", handleStorageChange);

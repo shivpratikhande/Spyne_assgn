@@ -59,27 +59,51 @@ export default function LandingPage() {
                 <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
                     <div className=" px-4 md:px-6">
                         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Featured Cars</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {[1, 2, 3].map((i) => (
-                                <Card key={i}>
-                                    <CardContent className="p-4">
-                                        <Image
-                                            src="/placeholder.svg"
-                                            alt={`Featured Car ${i}`}
-                                            className="w-full h-48 object-cover rounded-md mb-4"
-                                            width={300}
-                                            height={200}
-                                        />
-                                        <h3 className="text-xl font-bold mb-2">Car Model {i}</h3>
-                                        <p className="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        <p className="font-bold text-lg">$25,000</p>
-                                    </CardContent>
-                                    <CardFooter className="flex justify-between">
-                                        <Button variant="outline">View Details</Button>
-                                        <Button>Contact Seller</Button>
-                                    </CardFooter>
-                                </Card>
-                            ))}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-5">
+                            <Card className=" hover:scale-105  shadow-lg" >
+                                <CardContent className="p-4">
+                                    <Image
+                                        src="/image.png"
+                                        alt={`Featured Car `}
+                                        className=" h-56 object-cover rounded-md mb-4"
+                                        width={400}
+                                        height={400}
+                                    />
+                                    <h3 className="text-xl font-bold mb-2">Volkswagen Taigun</h3>
+                                    <p className="text-gray-600 mb-4">The Volkswagen Taigun offers a roomy interior, top-notch build, and fun driving. </p>
+                                </CardContent>
+
+                            </Card>
+                            <Card className=" hover:scale-105  shadow-lg" >
+                                <CardContent className="p-4">
+                                    <Image
+                                        src="/image copy 2.png"
+                                        alt={`Featured Car `}
+                                        className=" h-56 object-cover rounded-md mb-4"
+                                        width={400}
+                                        height={400}
+                                    />
+                                    <h3 className="text-xl font-bold mb-2">Tata Curvv </h3>
+                                    <p className="text-gray-600 mb-4">The Tata Curvv is a compelling choice due to its stylish coupe SUV design, extensive feature list,</p>
+                                </CardContent>
+
+                            </Card>
+                            <Card className=" hover:scale-105 shadow-lg" >
+                                <CardContent className="p-4">
+                                    <Image
+                                        src="/image copy.png"
+                                        alt={`Featured Car `}
+                                        className=" h-56 object-cover rounded-md mb-4"
+                                        width={400}
+                                        height={400}
+                                    />
+                                    <h3 className="text-xl font-bold mb-2">Skoda Slavia </h3>
+                                    <p className="text-gray-600 mb-4">The Slavia not only looks good but offers a thrilling driving experience, be it in the city or highway, due to its peppy engines and good handling.</p>
+                                </CardContent>
+
+                            </Card>
+
+
                         </div>
                     </div>
                 </section>
@@ -87,9 +111,9 @@ export default function LandingPage() {
                     <div className=" px-4 md:px-6">
                         <div className="flex flex-col items-center space-y-4 text-center">
                             <div className="space-y-2">
-                                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Sell Your Car?</h2>
+                                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to add Your Car?</h2>
                                 <p className="mx-auto max-w-[600px] text-gray-300 md:text-xl">
-                                    List your car on AutoMarket and reach thousands of potential buyers today.
+                                    Lets add Your collection.
                                 </p>
                             </div>
                             <Button className="bg-white text-black hover:bg-gray-200" size="lg" onClick={() => { router.push("/pages/create") }}>

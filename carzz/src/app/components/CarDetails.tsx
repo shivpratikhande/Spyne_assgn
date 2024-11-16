@@ -99,7 +99,9 @@ export default function CarDetailPage() {
                 <Image
                   src={details.images[0]}
                   alt="Car Image"
-                  className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 rounded-lg"
+                  width={720}
+                  height={500}
+                  className=" object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 rounded-lg"
                 />
               </div>
             ) : (
