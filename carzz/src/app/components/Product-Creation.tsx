@@ -29,7 +29,7 @@ const formSchema = z.object({
   description: z.string().min(10, {
     message: 'Description must be at least 10 characters.',
   }),
-  image: z.instanceof(File).refine((file) => file.size <= 5000000, {
+  image: z.instanceof(File).refine((file) => file.size <= 15000000, {
     message: 'Image must be less than 5MB.',
   }),
 })
@@ -58,7 +58,7 @@ export default function ProductCreationForm() {
 
     try {
       // Send the form data to the backend
-      const response = await axios.post('http://localhost:3000/api/cars', formData, {
+      const response = await axios.post('http://192.168.1.12:3000/api/cars', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },
@@ -77,7 +77,7 @@ export default function ProductCreationForm() {
       console.error('Error creating product:', error)
       // Optionally handle errors and show an error message
       
-    }home
+    }
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,8 +93,6 @@ export default function ProductCreationForm() {
   }
 
   const removeImage = () => {
-    form.setValue('image', undefined)
-    setImagePreview(null)
   }
 
   return (

@@ -9,9 +9,20 @@ export default function Navbar() {
             <div className="flex h-16 items-center justify-end p-5 lg:px-32 lg:mx-12 xl:mx-16">
                 <div className="mr-4 hidden md:flex">
                     <Link href="/" className="mr-6 flex items-center space-x-2">
-                        {/* <Image src="/placeholder.svg" alt="AutoMarket Logo" width={32} height={32} /> */}
-                        <span className="hidden sm:inline-block font-extrabold animate-bounce text-2xl hover:text-primary transition-colors">CARZZ</span>
+                        <div className="relative w-full h-40 overflow-hidden">
+                            <img
+                                src="/logocar.png"
+                                alt="Car Logo"
+                                className="w-full h-full object-contain animate-pulse"
+                            />
+                            <div className="absolute inset-0 border-4 border-transparent shadow-lg pointer-events-none"></div>
+                        </div>
+
+                        <span className="hidden sm:inline-block font-extrabold  text-2xl hover:text-primary transition-colors">
+                            CARZZ
+                        </span>
                     </Link>
+
                     <nav className="flex items-center space-x-6 text-sm font-medium ml-16">
                         <Link href="/pages/mycars" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
                             My Cars
