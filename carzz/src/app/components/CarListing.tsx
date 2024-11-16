@@ -22,6 +22,8 @@ interface Car {
     description: string;
     images: string[];
 }
+import { useRouter } from 'next/navigation';
+
 
 export default function CarListPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -124,6 +126,12 @@ export default function CarListPage() {
         }
     };
 
+    //view
+    const router = useRouter();
+    const handleView = async(userId: number)=>{
+        router.push(`/pages/mycars/cardetails/${userId}`)
+    }
+
     return (
         <div className="container mx-auto p-4 space-y-6 mt-12">
             <div className="flex justify-between">
@@ -178,7 +186,7 @@ export default function CarListPage() {
                                 <CardDescription>{car.description}</CardDescription>
                             </CardHeader>
                             <CardFooter>
-                                <Button className="w-full hover:bg-transparent hover:bg-teal-900">
+                                <Button className="w-full hover:bg-transparent hover:bg-teal-900" onClick={()=>handleView(car._id)}>
                                     View Details
                                 </Button>
                             </CardFooter>
