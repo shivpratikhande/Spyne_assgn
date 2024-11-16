@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Search, Menu } from "lucide-react"
+import { Search } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from 'next/navigation'
 

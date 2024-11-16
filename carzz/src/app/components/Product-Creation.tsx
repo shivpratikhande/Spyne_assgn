@@ -72,7 +72,7 @@ export default function ProductCreationForm() {
       
 
       // Redirect to /home after successful form submission
-      router.push('/home')
+      router.push('/page/mycars')
     } catch (error) {
       console.error('Error creating product:', error)
       // Optionally handle errors and show an error message

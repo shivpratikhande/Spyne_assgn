@@ -4,6 +4,8 @@ const cors = require('cors');
 const connectDb = require('./db');
 const carRoutes = require('./routes/carRoutes');
 require('dotenv').config();
+const authRoutes = require('./routes/authRoutes');  // Import the auth routes
+
 
 // Import Cloudinary config (make sure cloudinaryConfig.js is in place)
 require('./cloudinary'); // You just need to ensure it's initialized
@@ -20,6 +22,8 @@ app.use(cors());
 // No need to serve 'uploads' directory anymore, because Cloudinary handles image storage
 
 // API Routes
+app.use('/api/auth', authRoutes);
+
 app.use('/api', carRoutes);
 
 // Start the server
