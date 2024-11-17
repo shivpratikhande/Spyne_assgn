@@ -21,6 +21,6 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api', carRoutes);
 
-app.listen(port, () => {
+app.listen(port, ('0.0.0.0') => {
   console.log(`Server running on http://localhost:${port}`);
 });
