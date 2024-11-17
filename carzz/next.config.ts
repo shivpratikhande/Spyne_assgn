@@ -1,27 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
-
 // next.config.js
+
 module.exports = {
   eslint: {
-    ignoreDuringBuilds: process.env.NODE_ENV === 'production'
-  }
+    // Ignore ESLint during production builds
+    ignoreDuringBuilds: process.env.NODE_ENV === 'production',
+  },
+  images: {
+    // Allow images from Cloudinary and imgd.aeplcdn.com
+    domains: ['res.cloudinary.com', 'imgd.aeplcdn.com'],
+  },
 };
-
-// next.config.js
-
-module.exports = {
-  images: {
-    domains: ['res.cloudinary.com'], // Add Cloudinary domain here
-  },
-}
-module.exports = {
-  images: {
-    domains: ['imgd.aeplcdn.com'], // Add Cloudinary domain here
-  },
-}
