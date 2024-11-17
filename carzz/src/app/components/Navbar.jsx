@@ -73,7 +73,7 @@ export default function Navbar() {
                         <Link href="/pages/marketplace" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
                             Market Place
                         </Link>
-                        <Link href="/finance" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
+                        <Link href="/pages/finance" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
                             Finance
                         </Link>
                         <Link
@@ -83,7 +83,7 @@ export default function Navbar() {
                         >
                             Create
                         </Link>
-                        <Link href="/about" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
+                        <Link href="/pages/about" className="transition-colors hover:text-foreground/80 text-foreground/60 hover:scale-105 transform duration-200">
                             About
                         </Link>
                     </nav>
