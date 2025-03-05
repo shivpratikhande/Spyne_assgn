@@ -123,7 +123,7 @@ export default function LandingPage() {
                     </div>
                 </section>
             </main>
-            <footer className="w-full py-6 bg-gray-800 text-white">
+{/*             <footer className="w-full py-6 bg-gray-800 text-white">
                 <div className=" px-4 md:px-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center space-x-4">
@@ -140,7 +140,7 @@ export default function LandingPage() {
                         © 2023 AutoMarket. All rights reserved.
                     </div>
                 </div>
-            </footer>
+            </footer> */}
         </div>
     )
 }
